@@ -13,115 +13,115 @@
 
 # Country 
 WITH dow_table AS (SELECT DATE_PART('isodow', date) - 1 AS day,
-							new_cases,
-				   			location
-					FROM coviddeath
-				    WHERE location NOT IN ('Africa',
-				       				'South America',
-				       				'North America',
-				       				'Oceania',
-				     				'Asia',
-				       				'Europe',
-					  			    'World',
-					  				'International',
-					   				'European Union',
-					   				'Low income',
-					   				'Lower middle income',
-					   				'Upper middle income',
-					   				'High income')),
-		dow_table2 AS (SELECT location,
-								CASE WHEN day = 0 THEN 'Sunday'
-									WHEN day = 1 THEN 'Monday'
-									WHEN day = 2 THEN 'Tuesday'
-									WHEN day = 3 THEN 'Wednesday'
-									WHEN day = 4 THEN 'Thursday'
-									WHEN day = 5 THEN 'Friday'
-									WHEN day = 6 THEN 'Saturday' END day_of_the_week,
-									new_cases
-								FROM dow_table)
+			   new_cases,
+		           location
+		     FROM coviddeath
+		     WHERE location NOT IN ('Africa',
+				       	    'South America',
+				       	    'North America',
+				       	    'Oceania',
+				     	    'Asia',
+				            'Europe',
+					    'World',
+				            'International',
+					    'European Union',
+					    'Low income',
+					    'Lower middle income',
+					    'Upper middle income',
+					    'High income')),
+   dow_table2 AS (SELECT location,
+			CASE WHEN day = 0 THEN 'Sunday'
+			     WHEN day = 1 THEN 'Monday'
+			     WHEN day = 2 THEN 'Tuesday'
+			     WHEN day = 3 THEN 'Wednesday'
+			     WHEN day = 4 THEN 'Thursday'
+			     WHEN day = 5 THEN 'Friday'
+			     WHEN day = 6 THEN 'Saturday' END day_of_the_week,
+			new_cases
+		  FROM dow_table)
 SELECT location,
-		day_of_the_week,
-		SUM(new_cases) dow_total_cases
+       day_of_the_week,
+        SUM(new_cases) dow_total_cases
 FROM dow_table2
 GROUP BY 1,2
 ORDER BY 1,
-		CASE WHEN day_of_the_week = 'Sunday' THEN 1
-			 WHEN day_of_the_week = 'Monday' THEN 2
-			 WHEN day_of_the_week = 'Tuesday' THEN 3
-			 WHEN day_of_the_week = 'Wednesday' THEN 4
-			 WHEN day_of_the_week = 'Thursday' THEN 5
-			 WHEN day_of_the_week = 'Friday' THEN 6
-			 WHEN day_of_the_week = 'Saturday' THEN 7 END ASC,
-		3
+	CASE WHEN day_of_the_week = 'Sunday' THEN 1
+	     WHEN day_of_the_week = 'Monday' THEN 2
+	     WHEN day_of_the_week = 'Tuesday' THEN 3
+	     WHEN day_of_the_week = 'Wednesday' THEN 4
+	     WHEN day_of_the_week = 'Thursday' THEN 5
+	     WHEN day_of_the_week = 'Friday' THEN 6
+	     WHEN day_of_the_week = 'Saturday' THEN 7 END ASC,
+	 3
 
 # Continent
 
 WITH dow_table AS (SELECT DATE_PART('isodow', date) - 1 AS day,
-							new_cases,
-				   			location
-					FROM coviddeath
-				    WHERE location IN ('Africa',
-				       					'South America',
-				       					'North America',
-				       					'Oceania',
-				     					'Asia',
-				       					'Europe')),
-		dow_table2 AS (SELECT location,
-								CASE WHEN day = 0 THEN 'Sunday'
-									WHEN day = 1 THEN 'Monday'
-									WHEN day = 2 THEN 'Tuesday'
-									WHEN day = 3 THEN 'Wednesday'
-									WHEN day = 4 THEN 'Thursday'
-									WHEN day = 5 THEN 'Friday'
-									WHEN day = 6 THEN 'Saturday' END day_of_the_week,
-									new_cases
-								FROM dow_table)
+			  new_cases,
+       			  location
+		   FROM coviddeath
+	           WHERE location IN ('Africa',
+				      'South America',
+				      'North America',
+				      'Oceania',
+				      'Asia',
+				      'Europe')),
+     dow_table2 AS (SELECT location,
+			   CASE WHEN day = 0 THEN 'Sunday'
+				WHEN day = 1 THEN 'Monday'
+				WHEN day = 2 THEN 'Tuesday'
+				WHEN day = 3 THEN 'Wednesday'
+			        WHEN day = 4 THEN 'Thursday'
+				WHEN day = 5 THEN 'Friday'
+				WHEN day = 6 THEN 'Saturday' END day_of_the_week,
+			   new_cases
+		     FROM dow_table)
 SELECT location,
-		day_of_the_week,
-		SUM(new_cases) dow_total_cases
+       day_of_the_week,
+       SUM(new_cases) dow_total_cases
 FROM dow_table2
 GROUP BY 1,2
 ORDER BY 1,
-		CASE WHEN day_of_the_week = 'Sunday' THEN 1
-			 WHEN day_of_the_week = 'Monday' THEN 2
-			 WHEN day_of_the_week = 'Tuesday' THEN 3
-			 WHEN day_of_the_week = 'Wednesday' THEN 4
-			 WHEN day_of_the_week = 'Thursday' THEN 5
-			 WHEN day_of_the_week = 'Friday' THEN 6
-			 WHEN day_of_the_week = 'Saturday' THEN 7 END ASC,
-		3
+	CASE WHEN day_of_the_week = 'Sunday' THEN 1
+	     WHEN day_of_the_week = 'Monday' THEN 2
+	     WHEN day_of_the_week = 'Tuesday' THEN 3
+             WHEN day_of_the_week = 'Wednesday' THEN 4
+	     WHEN day_of_the_week = 'Thursday' THEN 5
+	     WHEN day_of_the_week = 'Friday' THEN 6
+	     WHEN day_of_the_week = 'Saturday' THEN 7 END ASC,
+	 3
 
 # For World
 
 WITH dow_table AS (SELECT DATE_PART('isodow', date) - 1 AS day,
-							new_cases,
-				   			location
-					FROM coviddeath
-				    WHERE location IN ('World')),
-		dow_table2 AS (SELECT location,
-								CASE WHEN day = 0 THEN 'Sunday'
-									WHEN day = 1 THEN 'Monday'
-									WHEN day = 2 THEN 'Tuesday'
-									WHEN day = 3 THEN 'Wednesday'
-									WHEN day = 4 THEN 'Thursday'
-									WHEN day = 5 THEN 'Friday'
-									WHEN day = 6 THEN 'Saturday' END day_of_the_week,
-									new_cases
-								FROM dow_table)
+			  new_cases,
+		          location
+		    FROM coviddeath			
+		    WHERE location IN ('World')),	    
+     dow_table2 AS (SELECT location,
+			   CASE WHEN day = 0 THEN 'Sunday'
+				WHEN day = 1 THEN 'Monday'
+				WHEN day = 2 THEN 'Tuesday'
+				WHEN day = 3 THEN 'Wednesday'
+				WHEN day = 4 THEN 'Thursday'
+				WHEN day = 5 THEN 'Friday'
+				WHEN day = 6 THEN 'Saturday' END day_of_the_week,
+			   new_cases
+		     FROM dow_table)
 SELECT location,
 		day_of_the_week,
 		SUM(new_cases) dow_total_cases
 FROM dow_table2
 GROUP BY 1,2
 ORDER BY 1,
-		CASE WHEN day_of_the_week = 'Sunday' THEN 1
-			 WHEN day_of_the_week = 'Monday' THEN 2
-			 WHEN day_of_the_week = 'Tuesday' THEN 3
-			 WHEN day_of_the_week = 'Wednesday' THEN 4
-			 WHEN day_of_the_week = 'Thursday' THEN 5
-			 WHEN day_of_the_week = 'Friday' THEN 6
-			 WHEN day_of_the_week = 'Saturday' THEN 7 END ASC,
-		3
+         CASE WHEN day_of_the_week = 'Sunday' THEN 1
+	      WHEN day_of_the_week = 'Monday' THEN 2
+	      WHEN day_of_the_week = 'Tuesday' THEN 3
+	      WHEN day_of_the_week = 'Wednesday' THEN 4
+	      WHEN day_of_the_week = 'Thursday' THEN 5
+	      WHEN day_of_the_week = 'Friday' THEN 6
+	      WHEN day_of_the_week = 'Saturday' THEN 7 END ASC,
+	3
 
 # Percentage of total cases
 
